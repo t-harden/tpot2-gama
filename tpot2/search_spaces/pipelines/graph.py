@@ -636,11 +636,12 @@ class GraphPipelineIndividual(SklearnIndividual):
         # nodes
         options = {'edgecolors': 'tab:gray', 'node_size': 800, 'alpha': 0.9}
         nodelist = list(G.nodes)
-        node_color = [plt.cm.Set1(G.nodes[n]['recursive depth']) for n in G]
+        # node_color = [plt.cm.Set1(G.nodes[n]['recursive depth']) for n in G]
 
         fig, ax = plt.subplots()
 
-        nx.draw(G, pos, nodelist=nodelist, node_color=node_color, ax=ax,  **options)
+        # nx.draw(G, pos, nodelist=nodelist, node_color=node_color, ax=ax,  **options)
+        nx.draw(G, pos, nodelist=nodelist, ax=ax,  **options)
 
 
         '''edgelist = []

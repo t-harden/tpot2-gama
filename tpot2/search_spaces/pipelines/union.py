@@ -7,6 +7,8 @@ from typing import Generator, List, Tuple, Union
 import random
 from ..base import SklearnIndividual, SklearnIndividualGenerator
 from ..tuple_index import TupleIndex
+from tpot2.search_spaces.nodes.estimator_node import EstimatorNodeIndividual
+from tpot2.search_spaces.pipelines.choice import ChoicePipelineIndividual
 
 class UnionPipelineIndividual(SklearnIndividual):
     """
@@ -23,6 +25,14 @@ class UnionPipelineIndividual(SklearnIndividual):
         self.pipeline = []
         for space in self.search_spaces:
             self.pipeline.append(space.generate(rng))
+    
+    def print_union(self):
+        for pipeline in self.pipeline:
+            if isinstance(pipeline, ChoicePipelineIndividual):
+                pipeline.print_choice()
+            elif isinstance(pipeline, EstimatorNodeIndividual):
+                print(pipeline.method)
+                print(pipeline.hyperparameters)
     
     def mutate(self, rng=None):
         rng = np.random.default_rng(rng)

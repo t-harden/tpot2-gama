@@ -6,14 +6,31 @@ from tpot2 import config
 from typing import Generator, List, Tuple, Union
 import random
 from ..base import SklearnIndividual, SklearnIndividualGenerator
+from tpot2.search_spaces.nodes.estimator_node import EstimatorNodeIndividual
 
 class ChoicePipelineIndividual(SklearnIndividual):
     def __init__(self, search_spaces : List[SklearnIndividualGenerator], rng=None) -> None:
         super().__init__()
         
         self.search_spaces = search_spaces
-        self.node = np.random.default_rng(rng).choice(self.search_spaces).generate()
+        # print("choice pipeline search spaces:")
+        # print(self.search_spaces) # EstimatorNode
+        self.node = np.random.default_rng(rng).choice(self.search_spaces).generate() # 从 choice space 里随机选一个 EstimatorNodeIndividual
+        # print("node: ")
+        # print(self.node)
         
+        # if isinstance(self.node, EstimatorNodeIndividual):
+            # print("choice pipeline: ")
+            # print(self.node.method)
+            # print(self.node.hyperparameters)
+            # self.init_example()
+        # print(self.node) # EstimatorNodeIndividual
+    
+        
+    def print_choice(self):
+        if isinstance(self.node, EstimatorNodeIndividual):
+            print("node method:", self.node.method)
+            print("node hyperparameters", self.node.hyperparameters)
 
     def mutate(self, rng=None):
         rng = np.random.default_rng(rng)

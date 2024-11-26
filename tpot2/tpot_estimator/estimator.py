@@ -104,7 +104,9 @@ class TPOTEstimator(BaseEstimator):
 
                          # random seed for random number generator (rng)
                         random_state = None,
-
+                        
+                        # 自定义的 pipeline
+                        init_ind = [],
                         ):
 
         '''
@@ -489,6 +491,7 @@ class TPOTEstimator(BaseEstimator):
 
         self.label_encoder_ = None
 
+        self.init_ind = init_ind
 
         set_dask_settings()
 
@@ -740,8 +743,13 @@ class TPOTEstimator(BaseEstimator):
                                             crossover_then_mutate_probability= self.crossover_then_mutate_probability,
 
                                             rng=self.rng,
-                                            )
 
+                                            init_ind = self.init_ind,
+                                            )
+        
+        for ind in self._evolver_instance.population.population:
+            ind.print_seq()
+            break
 
         self._evolver_instance.optimize()
         #self._evolver_instance.population.update_pareto_fronts(self.objective_names, self.objective_function_weights)

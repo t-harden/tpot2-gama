@@ -89,6 +89,8 @@ class BaseEvolver():
                     callback = None,
                     rng=None,
 
+                    init_ind = []
+
                     ) -> None:
         """
         Uses mutation, crossover, and optimization functions to evolve a population of individuals towards the given objective functions.
@@ -363,7 +365,14 @@ class BaseEvolver():
             init_names = init_names + ["Budget"]
         if self.population is None:
             self.population = tpot2.Population(column_names=init_names)
-            initial_population = [next(self.individual_generator) for _ in range(self.cur_population_size)]
+            init_population_size = len(init_ind)
+            if self.cur_population_size <= init_population_size:
+                initial_population = init_ind[:self.cur_population_size]
+            else:
+                initial_population = [next(self.individual_generator) for _ in range(self.cur_population_size - init_population_size)]
+                initial_population = init_ind + initial_population
+            # for individual in initial_population:
+            #     print(individual.unique_id())
             self.population.add_to_population(initial_population, self.rng)
             self.population.update_column(self.population.population, column_names="Generation", data=self.generation)
 

@@ -421,6 +421,10 @@ def get_search_space(name, n_classes=3, n_samples=100, n_features=100, random_st
     
     return get_node(name, n_classes=n_classes, n_samples=n_samples, n_features=n_features, random_state=random_state)
 
+def set_node(name, params):
+    node = get_node(name)
+    node.space = params
+    return node
 
 def get_node(name, n_classes=3, n_samples=100, n_features=100, random_state=None):
 

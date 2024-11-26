@@ -7,6 +7,8 @@ from typing import Generator, List, Tuple, Union
 import random
 from ..base import SklearnIndividual, SklearnIndividualGenerator
 from ..tuple_index import TupleIndex
+from tpot2.search_spaces.pipelines.choice import ChoicePipelineIndividual
+from tpot2.search_spaces.pipelines.union import UnionPipelineIndividual
 
 class SequentialPipelineIndividual(SklearnIndividual):
     # takes in a list of search spaces. each space is a list of SklearnIndividualGenerators.
@@ -20,7 +22,7 @@ class SequentialPipelineIndividual(SklearnIndividual):
 
         for space in self.search_spaces:
             self.pipeline.append(space.generate(rng))
-
+        self.pipeline_list = self.pipeline
         self.pipeline = np.array(self.pipeline)
         
     #TODO, mutate all steps or just one?
@@ -136,6 +138,16 @@ class SequentialPipelineIndividual(SklearnIndividual):
         l = ["SequentialPipeline"] + l
         return TupleIndex(tuple(l))
     
+    def print_seq(self):
+        idx = 1
+        for pipeline in self.pipeline_list:
+            print(idx)
+            idx += 1
+            print(type(pipeline))
+            if isinstance(pipeline, ChoicePipelineIndividual):
+                pipeline.print_choice()
+            elif isinstance(pipeline, UnionPipelineIndividual):
+                pipeline.print_union()
 
 
 

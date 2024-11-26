@@ -290,6 +290,8 @@ class GraphPipeline(_BaseComposition):
             raise BaseException 
         except: 
             pass
+
+        self.sklearn_pipeline = ""
         
     def __str__(self):
         if len(self.graph.edges) > 0:
@@ -398,3 +400,10 @@ class GraphPipeline(_BaseComposition):
     @property
     def _estimator_type(self):
         return self.graph.nodes[self.root]["instance"]._estimator_type
+    
+def sklearn_to_graphpipeline(estimator):
+    
+    pass
+
+def graphpipeline_to_graphpipelineIndividual():
+    pass
