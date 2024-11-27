@@ -747,9 +747,9 @@ class TPOTEstimator(BaseEstimator):
                                             init_ind = self.init_ind,
                                             )
         
-        for ind in self._evolver_instance.population.population:
-            ind.print_seq()
-            break
+        # for ind in self._evolver_instance.population.population:
+        #     ind.print_seq()
+        #     break
 
         self._evolver_instance.optimize()
         #self._evolver_instance.population.update_pareto_fronts(self.objective_names, self.objective_function_weights)

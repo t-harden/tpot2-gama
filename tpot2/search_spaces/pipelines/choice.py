@@ -13,18 +13,7 @@ class ChoicePipelineIndividual(SklearnIndividual):
         super().__init__()
         
         self.search_spaces = search_spaces
-        # print("choice pipeline search spaces:")
-        # print(self.search_spaces) # EstimatorNode
-        self.node = np.random.default_rng(rng).choice(self.search_spaces).generate() # 从 choice space 里随机选一个 EstimatorNodeIndividual
-        # print("node: ")
-        # print(self.node)
-        
-        # if isinstance(self.node, EstimatorNodeIndividual):
-            # print("choice pipeline: ")
-            # print(self.node.method)
-            # print(self.node.hyperparameters)
-            # self.init_example()
-        # print(self.node) # EstimatorNodeIndividual
+        self.node = np.random.default_rng(rng).choice(self.search_spaces).generate()
     
         
     def print_choice(self):
